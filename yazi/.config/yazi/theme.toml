@@ -1,0 +1,95 @@
+# Yazi theme — Sora palette (matches Ghostty, tmux, SketchyBar)
+# Only overrides; anything not listed falls back to Yazi's preset, which uses
+# the terminal's ANSI colors and therefore already follows Ghostty's Sora theme.
+#
+# bg #0e1018  fg #c8d0e0  sel #1e2430  grey #586478  dim #4a5468
+# cyan #80c8e0  purple #b0a0d8  sage #90c8a0  gold #d4b878  rose #c46c78
+
+[mgr]
+cwd = { fg = "#80c8e0", bold = true }
+find_keyword  = { fg = "#d4b878", bold = true, underline = true }
+find_position = { fg = "#b0a0d8", bold = true }
+marker_copied   = { fg = "#90c8a0", bg = "#90c8a0" }
+marker_cut      = { fg = "#c46c78", bg = "#c46c78" }
+marker_marked   = { fg = "#80c8e0", bg = "#80c8e0" }
+marker_selected = { fg = "#d4b878", bg = "#d4b878" }
+count_copied   = { fg = "#0e1018", bg = "#90c8a0" }
+count_cut      = { fg = "#0e1018", bg = "#c46c78" }
+count_selected = { fg = "#0e1018", bg = "#d4b878" }
+border_style = { fg = "#586478" }
+
+[indicator]
+parent  = { fg = "#c8d0e0", bg = "#1e2430" }
+current = { fg = "#80c8e0", bg = "#1e2430", bold = true }
+preview = { bg = "#1e2430" }
+
+[tabs]
+active   = { fg = "#0e1018", bg = "#80c8e0", bold = true }
+inactive = { fg = "#80c8e0", bg = "#1e2430" }
+
+[mode]
+normal_main = { fg = "#0e1018", bg = "#80c8e0", bold = true }
+normal_alt  = { fg = "#80c8e0", bg = "#1e2430" }
+select_main = { fg = "#0e1018", bg = "#b0a0d8", bold = true }
+select_alt  = { fg = "#b0a0d8", bg = "#1e2430" }
+unset_main  = { fg = "#0e1018", bg = "#c46c78", bold = true }
+unset_alt   = { fg = "#c46c78", bg = "#1e2430" }
+
+[status]
+perm_sep   = { fg = "#586478" }
+perm_type  = { fg = "#90c8a0" }
+perm_read  = { fg = "#d4b878" }
+perm_write = { fg = "#c46c78" }
+perm_exec  = { fg = "#80c8e0" }
+progress_label  = { fg = "#c8d0e0", bold = true }
+progress_normal = { fg = "#80c8e0", bg = "#1e2430" }
+progress_error  = { fg = "#c46c78", bg = "#1e2430" }
+
+[which]
+border    = { fg = "#586478" }
+cand      = { fg = "#80c8e0" }
+rest      = { fg = "#586478" }
+desc      = { fg = "#b0a0d8" }
+separator_style = { fg = "#586478" }
+
+[confirm]
+border = { fg = "#80c8e0" }
+title  = { fg = "#80c8e0" }
+
+[input]
+border   = { fg = "#80c8e0" }
+selected = { bg = "#1e2430" }
+
+[pick]
+border = { fg = "#80c8e0" }
+active = { fg = "#b0a0d8", bold = true }
+
+[cmp]
+border = { fg = "#80c8e0" }
+active = { fg = "#80c8e0", bg = "#1e2430" }
+
+[tasks]
+border  = { fg = "#80c8e0" }
+hovered = { fg = "#b0a0d8", bold = true }
+
+[help]
+border  = { fg = "#80c8e0" }
+chord   = { fg = "#80c8e0" }
+hovered = { fg = "#80c8e0", bg = "#1e2430", bold = true }
+
+[notify]
+title_info  = { fg = "#90c8a0" }
+title_warn  = { fg = "#d4b878" }
+title_error = { fg = "#c46c78" }
+
+# Fallback icons (files with no specific icon). Preset uses near-black/odd
+# colors for some of these; give them readable Sora colors instead.
+[icon]
+prepend_conds = [
+	{ if = "orphan", text = "", fg = "#c46c78" },
+	{ if = "link", text = "", fg = "#8898b8" },
+	{ if = "dir & hovered", text = "", fg = "#80c8e0" },
+	{ if = "dir", text = "", fg = "#80c8e0" },
+	{ if = "exec", text = "", fg = "#90c8a0" },
+	{ if = "!dir", text = "", fg = "#c8d0e0" },
+]

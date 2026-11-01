@@ -1,0 +1,4 @@
+# Ghostty config — reload with cmd-shift-,
+theme = sora
+# default font size is 13
+font-size = 14

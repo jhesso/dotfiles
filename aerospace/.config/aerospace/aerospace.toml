@@ -1,0 +1,193 @@
+################################################################################
+#                       JHESSO AEROSPACE CONFIG                                #
+#                   (ported from hyprland.conf — SUPER -> alt)                 #
+################################################################################
+#
+#   Hyprland SUPER-x        ->  alt-x
+#   Hyprland SUPER-SHIFT-x  ->  alt-shift-x
+#
+# Check app ids with:  aerospace list-apps
+
+config-version = 2
+
+start-at-login = true
+auto-reload-config = true
+
+################################################################################
+#                                 STARTUP                                      #
+################################################################################
+after-startup-command = ['exec-and-forget /bin/bash ~/.config/aerospace/startup.sh']
+
+# Tell sketchybar when the focused workspace changes
+exec-on-workspace-change = ['/bin/bash', '-c',
+  'sketchybar --trigger aerospace_workspace_change FOCUSED_WORKSPACE=$AEROSPACE_FOCUSED_WORKSPACE PREV_WORKSPACE=$AEROSPACE_PREV_WORKSPACE',
+]
+
+################################################################################
+#                                 GENERAL                                      #
+################################################################################
+enable-normalization-flatten-containers = true
+enable-normalization-opposite-orientation-for-nested-containers = true
+
+accordion-padding = 30
+default-root-container-layout = 'tiles'
+# Vertical monitors (your rotated one) get vertical splits automatically
+default-root-container-orientation = 'auto'
+
+on-focused-monitor-changed = ['move-mouse monitor-lazy-center']
+automatically-unhide-macos-hidden-apps = false
+
+# follow_mouse = 1
+focus-follows-mouse.enabled = true
+
+key-mapping.preset = 'qwerty'
+
+################################################################################
+#                                   LOOK                                       #
+################################################################################
+# gaps_in = 5, gaps_out = 10
+gaps.inner.horizontal = 5
+gaps.inner.vertical   = 5
+gaps.outer.left       = 10
+gaps.outer.bottom     = 10
+gaps.outer.right      = 10
+# 10 + room for sketchybar (height 40, y_offset 10). Assumes the macOS menu
+# bar is set to auto-hide; if it's always shown, lower this to ~25.
+gaps.outer.top        = 60
+
+################################################################################
+#                                WORKSPACES                                    #
+################################################################################
+# persistent:true
+persistent-workspaces = ["1", "2", "3", "4", "9", "10"]
+
+# Workspaces 1-10 are pinned to a monitor (like Hyprland's monitor: rules).
+# Everything else is free: alt-<n> runs workspace.sh, which opens empty
+# workspaces on the monitor under the mouse cursor.
+# Patterns: 'main', 'secondary', a monitor number, or a name regex
+# (see `aerospace list-monitors`). Falls back to main with one screen.
+# Pinned list is mirrored in workspace.sh (PINNED) — keep in sync.
+[workspace-to-monitor-force-assignment]
+# Top screen  (1-4, 8): XG27AQDMG at home, otherwise any external screen, else main.
+# Lower screen (5-7, 9, 10): the MacBook's own screen ("Built-in Retina Display"),
+#   else ENANOX156 at home (lid closed), else secondary, else main.
+# Names are case-insensitive regexes; see `aerospace list-monitors`.
+  1  = ['XG27AQDMG', '^(?!built-in)', 'main']
+  2  = ['XG27AQDMG', '^(?!built-in)', 'main']
+  3  = ['XG27AQDMG', '^(?!built-in)', 'main']
+  4  = ['XG27AQDMG', '^(?!built-in)', 'main']
+  8  = ['XG27AQDMG', '^(?!built-in)', 'main']
+  5  = ['built-in', 'ENANOX156', 'secondary', 'main']
+  6  = ['built-in', 'ENANOX156', 'secondary', 'main']
+  7  = ['built-in', 'ENANOX156', 'secondary', 'main']
+  9  = ['built-in', 'ENANOX156', 'secondary', 'main']
+  10 = ['built-in', 'ENANOX156', 'secondary', 'main']
+
+################################################################################
+#                                 KEYBINDS                                     #
+################################################################################
+[mode.main.binding]
+  # --- apps --------------------------------------------------------------
+  alt-q = 'exec-and-forget open -na Ghostty'          # $terminal
+  alt-e = 'exec-and-forget open ~'                    # $fileManager (Finder)
+  alt-w = 'exec-and-forget open -a "Zen"'             # $browser
+  alt-t = 'exec-and-forget open -a "Visual Studio Code"' # $editor
+
+  # --- noctalia equivalents (Raycast deeplinks; launcher = cmd-space) ----------------------
+  alt-v = 'exec-and-forget open "raycast://extensions/raycast/clipboard-history/clipboard-history"'
+  alt-l = 'exec-and-forget open "raycast://extensions/raycast/system/lock-screen"'
+  alt-comma = 'exec-and-forget open -a "Visual Studio Code" ~/.config/aerospace/aerospace.toml'
+
+  # --- windows -----------------------------------------------------------
+  alt-c       = 'close'                                # killactive
+  alt-f       = 'fullscreen'                           # fullscreen
+  alt-shift-f = 'layout floating tiling'               # togglefloating
+  # True fullscreen: no gaps, sketchybar hidden. Press again to restore both.
+  alt-ctrl-f  = ['fullscreen --no-outer-gaps', 'exec-and-forget sketchybar --bar hidden=toggle']
+  alt-j       = 'layout tiles horizontal vertical'     # togglesplit
+  alt-shift-m = 'reload-config'                        # (exit -> reload)
+
+  # Move focus (crosses monitors like Hyprland)
+  alt-left  = 'focus --boundaries all-monitors-outer-frame left'
+  alt-right = 'focus --boundaries all-monitors-outer-frame right'
+  alt-up    = 'focus --boundaries all-monitors-outer-frame up'
+  alt-down  = 'focus --boundaries all-monitors-outer-frame down'
+
+  # Move windows
+  alt-shift-left  = 'move left'
+  alt-shift-right = 'move right'
+  alt-shift-up    = 'move up'
+  alt-shift-down  = 'move down'
+
+  # Resize (your splitratio binds were commented out; here for convenience)
+  alt-minus = 'resize smart -50'
+  alt-equal = 'resize smart +50'
+  alt-shift-equal = 'resize smart +50'   # alt-+ (+ is shift-= on US layout)
+
+  # --- workspaces --------------------------------------------------------
+  alt-1 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 1'
+  alt-2 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 2'
+  alt-3 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 3'
+  alt-4 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 4'
+  alt-5 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 5'
+  alt-6 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 6'
+  alt-7 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 7'
+  alt-8 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 8'
+  alt-9 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 9'
+  alt-0 = 'exec-and-forget /bin/bash ~/.config/aerospace/workspace.sh 10'
+
+  alt-shift-1 = 'move-node-to-workspace 1'
+  alt-shift-2 = 'move-node-to-workspace 2'
+  alt-shift-3 = 'move-node-to-workspace 3'
+  alt-shift-4 = 'move-node-to-workspace 4'
+  alt-shift-5 = 'move-node-to-workspace 5'
+  alt-shift-6 = 'move-node-to-workspace 6'
+  alt-shift-7 = 'move-node-to-workspace 7'
+  alt-shift-8 = 'move-node-to-workspace 8'
+  alt-shift-9 = 'move-node-to-workspace 9'
+  alt-shift-0 = 'move-node-to-workspace 10'
+
+  alt-tab       = 'workspace-back-and-forth'
+  alt-shift-tab = 'move-workspace-to-monitor --wrap-around next'
+
+  alt-shift-semicolon = 'mode service'
+
+[mode.service.binding]
+  esc       = ['reload-config', 'mode main']
+  r         = ['flatten-workspace-tree', 'mode main']   # reset layout
+  f         = ['layout floating tiling', 'mode main']
+  backspace = ['close-all-windows-but-current', 'mode main']
+  shift-left  = ['join-with left',  'mode main']
+  shift-down  = ['join-with down',  'mode main']
+  shift-up    = ['join-with up',    'mode main']
+  shift-right = ['join-with right', 'mode main']
+
+################################################################################
+#                               WINDOW RULES                                   #
+################################################################################
+# windowrule = workspace N silent, match:class ...
+[[on-window-detected]]
+  if.app-id = 'com.microsoft.VSCode'
+  run = 'move-node-to-workspace 1'
+
+[[on-window-detected]]
+  if.app-name-regex-substring = 'zen'
+  run = 'move-node-to-workspace 2'
+
+# Ghostty -> 3, 6, 7 is done in startup.sh (one window each, at login only)
+
+[[on-window-detected]]
+  if.app-name-regex-substring = '^Claude$'
+  run = 'move-node-to-workspace 4'
+
+[[on-window-detected]]
+  if.app-name-regex-substring = 'teams'
+  run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+  if.app-name-regex-substring = 'outlook'
+  run = 'move-node-to-workspace 9'
+
+[[on-window-detected]]
+  if.app-name-regex-substring = 'tidal'
+  run = 'move-node-to-workspace 10'
