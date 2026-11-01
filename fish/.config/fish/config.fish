@@ -37,13 +37,41 @@ if status is-interactive
     if command -q starship
         starship init fish | source
     end
+
+    # Modern replacements, aliased to the commands they replace.
+    # `command ls` / `command cat` still reach the originals.
+    if command -q eza
+        alias ls 'eza --group-directories-first --icons=auto'
+        alias ll 'eza -l --git --group-directories-first --icons=auto'
+        alias la 'eza -la --git --group-directories-first --icons=auto'
+        alias lt 'eza --tree --level=2 --group-directories-first --icons=auto'
+    end
+
+    if command -q bat
+        # bat drops line numbers/colors when piped, so `cat x | ...` still works
+        alias cat 'bat --paging=never'
+    end
+
+    # zoxide takes over `cd` (plus `cdi` for interactive fzf picking)
+    if command -q zoxide
+        zoxide init fish --cmd cd | source
+    end
+
+    # thefuck is slow to init (Python), so only load it on first use
+    if command -q thefuck
+        function fuck --description 'Correct the previous command'
+            functions -e fuck
+            thefuck --alias | source
+            fuck $argv
+        end
+    end
 end
 
 function y
-	set tmp (mktemp -t "yazi-cwd.XXXXXX")
-	command yazi $argv --cwd-file="$tmp"
-	if read -z cwd < "$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
-		builtin cd -- "$cwd"
-	end
-	command rm -f -- "$tmp"
+    set tmp (mktemp -t "yazi-cwd.XXXXXX")
+    command yazi $argv --cwd-file="$tmp"
+    if read -z cwd <"$tmp"; and [ "$cwd" != "$PWD" ]; and test -d "$cwd"
+        builtin cd -- "$cwd"
+    end
+    command rm -f -- "$tmp"
 end
