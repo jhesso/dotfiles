@@ -1,0 +1,303 @@
+
+################################################################################
+#                                                                              #
+#                                                                              #
+#                            JHESSO HYPRLAND CONFIG                  	   	   #
+#                                                                              #
+#                                                                              #
+################################################################################
+
+################################################################################
+#                                                                              #
+#                               	VARIABLES                      		   	   #
+#                                                                              #
+################################################################################
+
+$mainMod    	=	SUPER
+$terminal       =   ghostty
+$fileManager    =   thunar
+$browser        =   zen-browser
+$editor         =   zed
+
+################################################################################
+#                                                                              #
+#                               MONITOR SETTINGS                       		   #
+#                                                                              #
+################################################################################
+
+#monitor			=	HDMI-A-1,1920x1080,0x0,1,transform,1
+#monitor			=	DP-2,1920x1080@280,1080x400,1
+#monitor             =	DP-2,2560x1440@239.97,0x0,1
+monitor				=	DP-2,highres,0x0,1
+monitor             =	HDMI-A-1,1920x1080@144,-1080x-400,1,transform,1
+monitor		=	HDMI-A-2,1920x1080@60,0x1440,1
+#monitor				=	HDMI-A-1,disable
+#monitor				=	HDMI-A-1,1920x1080@144,-1920x0,1
+
+################################################################################
+#                                                                              #
+#                               	 STARTUP                       		   	   #
+#                                                                              #
+################################################################################
+
+exec-once	=	systemctl --user start hyprpolkitagent
+#exec-once	=	waybar
+exec-once	=	thunar --daemon
+#exec-once	=	/home/jhesso/.config/hypr/scripts/autostart
+#exec-once	=	flameshot
+#exec-once	=	hyprpaper
+#exec-once	=	wl-paste --type text --watch cliphist store
+#exec-once	=	wl-paste --type image --watch cliphist store
+exec-once   =   protonvpn-app
+exec-once   =   sleep 10 && vesktop
+exec-once   =   sleep 10 && cider
+exec-once   =   sleep 10 && steam
+exec-once   =   hyprpm reload
+exec-once	=	playerctld daemon
+exec-once	=	dunst
+#exec-once	=	sleep 10 && nvibrant 0 0 0 0 0 0 0
+exec-once	=	sleep 10 && $browser
+exec-once	=	qs -c noctalia-shell
+
+################################################################################
+#                                                                              #
+#                               	   ENV                       		   	   #
+#                                                                              #
+################################################################################
+
+env		=	XCURSOR_SIZE,24
+env		=	WLR_NO_HARDWARE_CURSORS,1
+env		=	RANGER_LOAD_DEFAULT_RC=false
+env		=	HYPRCURSOR_THEME,rose-pine-hyprcursor
+env		=	HYPRCURSOR_SIZE,24
+env		=	LIBVA_DRIVER_NAME,nvidia
+env		=	__GLX_VENDOR_LIBRARY_NAME,nvidia
+env		=	ELECTRON_OZONE_PLATFORM_HINT,auto
+env		=	HYPRSHOT_DIR,/home/jhesso/Pictures/screenshots
+#env	=	XDG_SESSION_TYPE,wayland
+#env	=	LIBVA_DRIVER_NAME,nvidia
+#env	=	GBM_BACKEND,nvidia-drm
+#env	=	__GLX_VENDOR_LIBRARY_NAME,nvidia
+#env	=	QT_QPA_PLATFORM=wayland
+
+input {
+	kb_layout = us,fi
+	follow_mouse = 1
+	touchpad {
+		natural_scroll = no
+	}
+	sensitivity = 0
+}
+
+################################################################################
+#                                                                              #
+#                               	KEYBINDS                       		   	   #
+#                                                                              #
+################################################################################
+
+bind		=	$mainMod, Q, exec, $terminal
+bind		=	$mainMod, C, killactive,
+bind		=	$mainMod SHIFT, M, exit,
+bind		=	$mainMod, E, exec, $fileManager
+bind		=	$mainMod SHIFT, F, togglefloating
+bind		=	$mainMod, F, fullscreen
+bind		=	$mainMod, R, exec, rofi -show drun
+bind		=	$mainMod, P, exec, hyprshot -m region
+bind		=	$mainMod, J, togglesplit
+bind		=	$mainMod, V, exec, cliphist list | rofi -dmenu | cliphist decode | wl-copy
+#bind		=	$mainMod, L, exec, swaylock
+bind		=	$mainMod, D, exec, vesktop
+bind        =   $mainMod, W, exec, $browser
+bind        =   $mainMod, T, exec, $editor
+
+input {
+kb_layout=us,fi
+kb_options=grp:win_space_toggle
+}
+
+# Move focus with mainMod + arrow keys
+bind		=	$mainMod, left, movefocus, l
+bind		=	$mainMod, right, movefocus, r
+bind		=	$mainMod, up, movefocus, u
+bind		=	$mainMod, down, movefocus, d
+
+# Move windows with mainMod + SHIFT + arrow keys
+bind		=	$mainMod SHIFT, left, movewindow, l
+bind		=	$mainMod SHIFT, right, movewindow, r
+bind		=	$mainMod SHIFT, up, movewindow, u
+bind		=	$mainMod SHIFT, down, movewindow, d
+
+# ── Resize tiled splits with Super+Ctrl+Arrows ───────────────────────────────
+# Up / Down – vertical split
+#bind = SUPER+CTRL, UP, splitratio, -0.05   # move shared border up
+#bind = SUPER+CTRL, DOWN, splitratio,  0.05   # move shared border down
+
+# Left / Right – horizontal split
+#bind = SUPER+CTRL, LEFT, splitratio, -0.05   # move shared border left
+#bind = SUPER+CTRL, RIGHT, splitratio,  0.05   # move shared border right
+
+# Super+Ctrl+Arrows → smart splitratio (5 % steps)
+bind = SUPER+CTRL, UP,    exec,    ~/.local/bin/tiled-smart-splitratio.sh up -0.05
+bind = SUPER+CTRL, DOWN,  exec,    ~/.local/bin/tiled-smart-splitratio.sh down 0.05
+bind = SUPER+CTRL, LEFT,  exec,    ~/.local/bin/tiled-smart-splitratio.sh left -0.05
+bind = SUPER+CTRL, RIGHT, exec,    ~/.local/bin/tiled-smart-splitratio.sh right 0.05
+
+# Optional “fast” variant with SHIFT (15 % steps)
+bind = SUPER+CTRL+SHIFT, UP,    exec,    ~/.local/bin/tiled-smart-splitratio.sh up -0.15
+bind = SUPER+CTRL+SHIFT, DOWN,  exec,    ~/.local/bin/tiled-smart-splitratio.sh down 0.15
+bind = SUPER+CTRL+SHIFT, LEFT,  exec,    ~/.local/bin/tiled-smart-splitratio.sh left -0.15
+bind = SUPER+CTRL+SHIFT, RIGHT, exec,    ~/.local/bin/tiled-smart-splitratio.sh right 0.15
+
+# Switch workspaces with mainMod + [0-9]
+bind		=	$mainMod, 1, workspace, 1
+bind		=	$mainMod, 2, workspace, 2
+bind		=	$mainMod, 3, workspace, 3
+bind		=	$mainMod, 4, workspace, 4
+bind		=	$mainMod, 5, workspace, 5
+bind		=	$mainMod, 6, workspace, 6
+bind		=	$mainMod, 7, workspace, 7
+bind		=	$mainMod, 8, workspace, 8
+bind		=	$mainMod, 9, workspace, 9
+bind		=	$mainMod, 0, workspace, 10
+
+# Move active window to a workspace with mainMod + SHIFT + [0-9]
+bind		=	$mainMod SHIFT, 1, movetoworkspace, 1
+bind		=	$mainMod SHIFT, 2, movetoworkspace, 2
+bind		=	$mainMod SHIFT, 3, movetoworkspace, 3
+bind		=	$mainMod SHIFT, 4, movetoworkspace, 4
+bind		=	$mainMod SHIFT, 5, movetoworkspace, 5
+bind		=	$mainMod SHIFT, 6, movetoworkspace, 6
+bind		=	$mainMod SHIFT, 7, movetoworkspace, 7
+bind		=	$mainMod SHIFT, 8, movetoworkspace, 8
+bind		=	$mainMod SHIFT, 9, movetoworkspace, 9
+bind		=	$mainMod SHIFT, 0, movetoworkspace, 10
+
+# Scroll through existing workspaces with mainMod + scroll
+bind		=	$mainMod, mouse_down, workspace, e+1
+bind		=	$mainMod, mouse_up, workspace, e-1
+
+# Move/resize windows with mainMod + LMB/RMB and dragging
+bindm		=	$mainMod, mouse:272, movewindow
+bindm		=	$mainMod, mouse:273, resizewindow
+
+# Mediakey functionality
+bindel = , XF86AudioRaiseVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%+
+bindel = , XF86AudioLowerVolume, exec, wpctl set-volume @DEFAULT_AUDIO_SINK@ 5%-
+bindl = , XF86AudioMute, exec, wpctl set-mute @DEFAULT_AUDIO_SINK@ toggle
+bindl = , XF86AudioPlay, exec, playerctl play-pause
+bindl = , XF86AudioPrev, exec, playerctl previous
+bindl = , XF86AudioNext, exec, playerctl next
+
+################################################################################
+#                                                                              #
+#                               	 WORKPLACES                   		   	   #
+#                                                                              #
+################################################################################
+
+workspace   =   1, monitor:DP-2, persistent:true, default:true
+workspace   =   2, monitor:DP-2, persistent:true
+workspace   =   3, monitor:DP-2, persistent:true
+workspace   =   4, monitor:DP-2, persistent:true
+workspace	=	9, monitor:HDMI-A-2, persistent:true, default:true
+workspace   =   10, monitor:HDMI-A-1, persistent:true, default:true
+
+################################################################################
+#                                                                              #
+#                               	 WINDOWRULES                   		   	   #
+#                                                                              #
+################################################################################
+
+windowrule = workspace 10 silent, match:class vesktop
+windowrule = workspace 10 silent, match:class Spotify
+windowrule = workspace 9 silent, match:class Cider
+windowrule = workspace 3 silent, match:class steam
+windowrule = workspace 1 silent, match:class dev.zed.Zed
+windowrule = workspace 4 silent, match:class cs2
+windowrule = workspace 4 silent, match:class steam_app_2073851
+windowrule = workspace 4 silent, fullscreen on, match:class steam_app_2073850
+windowrule = workspace 2 silent, opacity 1.0 override, match:class zen
+windowrule = float on, match:class Game
+windowrule = fullscreen on, match:class steam_app_306130
+
+################################################################################
+#                                                                              #
+#                               	 LOOK                       		   	   #
+#                                                                              #
+################################################################################
+
+general {
+	gaps_in = 2
+	gaps_out = 2
+	border_size = 2
+	col.active_border = rgba(414868FF)
+	col.inactive_border = rgba(414868FF)
+	layout = dwindle
+}
+
+decoration {
+	rounding = 6
+	active_opacity = 1.0
+	inactive_opacity = 0.9
+	blur {
+		enabled = true
+		size = 3
+		passes = 3
+		vibrancy = 0.1696
+        ignore_opacity = false
+        new_optimizations = on
+        popups = false
+	}
+}
+
+animations {
+	enabled = yes
+	bezier = myBezier, 0.05, 0.9, 0.1, 1.05
+	animation = windows, 1, 7, myBezier
+	animation = windowsOut, 1, 7, default, popin 80%
+	animation = border, 1, 10, default
+	animation = borderangle, 1, 8, default
+	animation = fade, 1, 7, default
+	animation = workspaces, 1, 6, default
+}
+
+dwindle {
+	pseudotile = yes # master switch for pseudotiling. Enabling is bound to mainMod + P in the keybinds section below
+	preserve_split = yes # you probably want this
+}
+
+################################################################################
+#                                                                              #
+#                               	  MOUSE                       		   	   #
+#                                                                              #
+################################################################################
+# to find name of mouse:
+#	hyprctl devices
+
+################################################################################
+#                                                                              #
+#                               	HACKS                       		   	   #
+#                                                                              #
+################################################################################
+
+# Workaround for wrong wpaperd texture on vertical screen
+# https://github.com/hyprwm/Hyprland/issues/9408#issuecomment-2661608482
+render {
+     expand_undersized_textures = false
+}
+
+# Try to make sure that games are opened on the main monitor and not on the second monitor.
+exec-once=xrandr --output [DP-2] --primary
+
+plugin {
+    csgo-vulkan-fix {
+        res_w = 1440
+        res_h = 1080
+
+        # NOT a regex! This is a string and has to exactly match initial_class
+		#class = cs2
+		class = steam_app_2073850
+
+        # Whether to fix the mouse position. A select few apps might be wonky with this.
+        fix_mouse = true
+    }
+}
