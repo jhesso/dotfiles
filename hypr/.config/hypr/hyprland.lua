@@ -166,6 +166,8 @@ hl.env("QT_QPA_PLATFORMTHEME", "qt6ct")
 
 hl.config({
 	input = {
+		kb_layout = "us,fi",
+		kb_options = "grp:win_space_toggle",
 		sensitivity = -0.25,
 		accel_profile = "flat",
 	},
