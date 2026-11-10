@@ -66,6 +66,10 @@ if status is-interactive
             fuck $argv
         end
     end
+
+    function mcc --description 'Attach to the Minecraft server console'
+        ssh -t games tmux new -As mc
+    end
 end
 
 function y

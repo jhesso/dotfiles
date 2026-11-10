@@ -3,3 +3,4 @@ theme = sora
 # default font size is 13
 font-size = 12
 
+shell-integration-features = ssh-terminfo,ssh-env
