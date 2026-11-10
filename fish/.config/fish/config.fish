@@ -1,8 +1,9 @@
+# The following lines were added by Docker Desktop to add commands to your PATH.
+export PATH="$PATH:/Users/jhesso/.docker/bin"
+# End of Docker Desktop section.
+
 switch (uname)
     case Darwin
-        # The following lines were added by Docker Desktop to add commands to your PATH.
-        export PATH="$PATH:/Users/jhesso/.docker/bin"
-        # End of Docker Desktop section.
 
         # Homebrew (puts /opt/homebrew/bin first in PATH, e.g. so tmux plugins get Bash 5)
         if test -x /opt/homebrew/bin/brew
