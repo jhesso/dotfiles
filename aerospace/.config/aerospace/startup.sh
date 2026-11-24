@@ -5,7 +5,7 @@
 # terminals opened later go wherever you are.
 export PATH="/opt/homebrew/bin:/usr/local/bin:$PATH"
 
-for app in "Visual Studio Code" "Zen" "Claude" "Microsoft Teams" "Microsoft Outlook"; do
+for app in "Zen" "Claude" "Microsoft Teams" "Microsoft Outlook" "Obsidian"; do
   open -ga "$app"
 done
 

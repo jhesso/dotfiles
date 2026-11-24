@@ -92,12 +92,10 @@ persistent-workspaces = ["1", "2", "3", "4", "9", "10"]
   alt-q = 'exec-and-forget open -na Ghostty'          # $terminal
   alt-e = 'exec-and-forget open ~'                    # $fileManager (Finder)
   alt-w = 'exec-and-forget open -a "Zen"'             # $browser
-  alt-t = 'exec-and-forget open -a "Visual Studio Code"' # $editor
 
   # --- noctalia equivalents (Raycast deeplinks; launcher = cmd-space) ----------------------
   alt-v = 'exec-and-forget open "raycast://extensions/raycast/clipboard-history/clipboard-history"'
   alt-l = 'exec-and-forget open "raycast://extensions/raycast/system/lock-screen"'
-  alt-comma = 'exec-and-forget open -a "Visual Studio Code" ~/.config/aerospace/aerospace.toml'
 
   # --- windows -----------------------------------------------------------
   alt-c       = 'close'                                # killactive
@@ -184,6 +182,10 @@ persistent-workspaces = ["1", "2", "3", "4", "9", "10"]
 [[on-window-detected]]
   if.app-name-regex-substring = 'teams'
   run = 'move-node-to-workspace 5'
+
+[[on-window-detected]]
+  if.app-id = 'md.obsidian'
+  run = 'move-node-to-workspace 8'
 
 [[on-window-detected]]
   if.app-name-regex-substring = 'outlook'
