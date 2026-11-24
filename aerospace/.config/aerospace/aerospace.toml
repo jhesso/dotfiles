@@ -71,13 +71,14 @@ persistent-workspaces = ["1", "2", "3", "4", "9", "10"]
 # Top screen  (1-4, 8): XG27AQDMG at home, otherwise any external screen, else main.
 # Lower screen (5-7, 9, 10): the MacBook's own screen ("Built-in Retina Display"),
 #   else ENANOX156 at home (lid closed), else secondary, else main.
+# Workspace 5 (Teams) goes to the vertical VG279QM at home, else follows the lower-screen rule.
 # Names are case-insensitive regexes; see `aerospace list-monitors`.
   1  = ['XG27AQDMG', '^(?!built-in)', 'main']
   2  = ['XG27AQDMG', '^(?!built-in)', 'main']
   3  = ['XG27AQDMG', '^(?!built-in)', 'main']
   4  = ['XG27AQDMG', '^(?!built-in)', 'main']
   8  = ['XG27AQDMG', '^(?!built-in)', 'main']
-  5  = ['built-in', 'ENANOX156', 'secondary', 'main']
+  5  = ['VG279QM', 'built-in', 'ENANOX156', 'secondary', 'main']  # Teams: vertical screen at home
   6  = ['built-in', 'ENANOX156', 'secondary', 'main']
   7  = ['built-in', 'ENANOX156', 'secondary', 'main']
   9  = ['built-in', 'ENANOX156', 'secondary', 'main']
